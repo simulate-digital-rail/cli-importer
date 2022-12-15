@@ -2,7 +2,7 @@
 name = "CLI-Importer"
 version = "0.9"
 description = ""
-authors = ["OSM@HPI"]
+authors = ["OSM HPI <OSM@HPI>"]
 packages = [{include = "cli_importer"}]
 
 [tool.poetry.dependencies]
@@ -11,6 +11,7 @@ yaramo = {git = "https://github.com/simulate-digital-rail/yaramo.git"}
 
 [tool.poetry.group.dev.dependencies]
 yaramo = {git = "https://github.com/simulate-digital-rail/yaramo.git"}
+planpro-exporter = {git = "https://github.com/simulate-digital-rail/planpro-exporter.git", rev = "yaramo-model"}
 
 [build-system]
 requires = ["poetry-core"]

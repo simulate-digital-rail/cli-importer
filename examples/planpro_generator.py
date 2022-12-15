@@ -1,5 +1,5 @@
 
-from planprogenerator import Generator, Config
+from planproexporter import Generator
 
 from cli_importer.cli import CLI
 
@@ -10,7 +10,7 @@ if __name__ == '__main__':
     generator.generate(_cli.topology.nodes.values(),
         _cli.topology.edges.values(),
         _cli.topology.signals.values(),
-        Config(author_name="Arne Boockmeier",
-        organisation="HPI.OSM", coord_representation='dbref'), filename="Test")
+        author_name="Arne Boockmeier",
+        organisation="HPI.OSM", filename="Test")
     print("Generation completed")
     print("Generator terminates.")
