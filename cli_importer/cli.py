@@ -28,15 +28,14 @@ class CLI:
         print("Create a node (end or point): node <id> <x> <y> <description>")
         print("Create an edge: edge <node id a> <node id b> [coords x1,y1 [x2,y2 ...]]")
         print("Create a signal: signal <node id from> <node id to> <distance to node from> <function> <kind> [<name>]")
-        print("Generate the plan pro file: generate")
-        print("Exit without generate: exit")
+        print("Exit cli: exit")
         print()
 
         filename = input("Please enter the file name (without suffix): ")
 
         command = ""
         while command != "exit":
-            command = input("#: ")
+            command = input("#: ").strip()
 
             if command == "":
                 continue
@@ -95,10 +94,10 @@ class CLI:
                 if len(splits) > 6:
                     element_name = splits[6]
 
-                if function not in SignalFunction:
+                if not SignalFunction[function]:
                     print(f"Function {function} is not supported. Choose any from: {[member.name for member in SignalFunction]}")
                     continue
-                if kind not in SignalKind:
+                if not SignalKind[kind]:
                     print(f"Kind {kind} is not supported. Choose any from: {[member.name for member in SignalKind]}")
                     continue
 
@@ -124,7 +123,7 @@ class CLI:
                 if edge.node_b.uuid == node_a_id and edge.node_a.uuid == node_b_id:
                     effective_direction = "gegen"
 
-                signal = Signal(edge, distance, effective_direction, function, kind, element_name=element_name)
+                signal = Signal(edge, distance, effective_direction, function, kind, name=element_name)
                 self.topology.signals[signal.uuid] = signal
             elif command != "exit":
                 print("Command does not exists")
