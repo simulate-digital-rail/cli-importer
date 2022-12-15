@@ -38,7 +38,6 @@ class CLI:
         while command != "exit":
             command = input("#: ")
 
-            is_valid = False
             if command == "":
                 continue
             elif re.match(r'^node [a-zA-Z_0-9]+ -?\d+(\.\d+)? -?\d+(\.\d+)?( [a-zA-Z_0-9]+)?$', command):
@@ -51,7 +50,6 @@ class CLI:
                     desc = splits[4]
 
                 if self.__find_node_with_identifier(identifier) is None:
-                    is_valid = True
                     node = Node(uuid=identifier)
                     node.geo_node = GeoNode(x, y)
                     self.topology.nodes[node.uuid] = node
@@ -71,7 +69,6 @@ class CLI:
                     print(f"Node with ID {node_b_id} does not exists. Please create it first.")
                 else:
                     if self.__find_edge_by_nodes(node_a, node_b) is None:
-                        is_valid = True
                         edge = Edge(node_a, node_b)
                         node_a.connected_nodes.append(node_b)
                         node_b.connected_nodes.append(node_a)
@@ -123,7 +120,6 @@ class CLI:
                     print("Distance is greater than edge length. Choose a smaller distance.")
                     continue
 
-                is_valid = True
                 effective_direction = "in"
                 if edge.node_b.identifier == node_a_id and edge.node_a.identifier == node_b_id:
                     effective_direction = "gegen"
