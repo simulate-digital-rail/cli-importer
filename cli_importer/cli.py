@@ -1,5 +1,5 @@
 from typing import List
-from yaramo.model import Node, Edge, Signal, GeoNode, Topology
+from yaramo.model import Node, Edge, Signal, Topology, SignalFunction, SignalKind, DbrefGeoNode
 import re
 
 
@@ -17,7 +17,7 @@ class CLI:
 
 
     def __find_edge_by_nodes(self,_node_a: Node, _node_b: Node):
-        for _edge in self.topology.edges:
+        for _edge in self.topology.edges.values():
             if _edge.is_node_connected(_node_a) and _edge.is_node_connected(_node_b):
                 return _edge
         return None
@@ -28,17 +28,15 @@ class CLI:
         print("Create a node (end or point): node <id> <x> <y> <description>")
         print("Create an edge: edge <node id a> <node id b> [coords x1,y1 [x2,y2 ...]]")
         print("Create a signal: signal <node id from> <node id to> <distance to node from> <function> <kind> [<name>]")
-        print("Generate the plan pro file: generate")
-        print("Exit without generate: exit")
+        print("Exit cli: exit")
         print()
 
         filename = input("Please enter the file name (without suffix): ")
 
         command = ""
         while command != "exit":
-            command = input("#: ")
+            command = input("#: ").strip()
 
-            is_valid = False
             if command == "":
                 continue
             elif re.match(r'^node [a-zA-Z_0-9]+ -?\d+(\.\d+)? -?\d+(\.\d+)?( [a-zA-Z_0-9]+)?$', command):
@@ -51,9 +49,8 @@ class CLI:
                     desc = splits[4]
 
                 if self.__find_node_with_identifier(identifier) is None:
-                    is_valid = True
                     node = Node(uuid=identifier)
-                    node.geo_node = GeoNode(x, y)
+                    node.geo_node = DbrefGeoNode(x, y)
                     self.topology.nodes[node.uuid] = node
                 else:
                     print(f"Node with id {identifier} already exists. Please use a different id.")
@@ -71,7 +68,6 @@ class CLI:
                     print(f"Node with ID {node_b_id} does not exists. Please create it first.")
                 else:
                     if self.__find_edge_by_nodes(node_a, node_b) is None:
-                        is_valid = True
                         edge = Edge(node_a, node_b)
                         node_a.connected_nodes.append(node_b)
                         node_b.connected_nodes.append(node_a)
@@ -83,8 +79,8 @@ class CLI:
                             intermediate_node = splits[i]
                             x = float(intermediate_node.split(",")[0]) + 4533770.0
                             y = float(intermediate_node.split(",")[1]) + 5625780.0
-                            geo_node = GeoNode(x, y)
-                            edge.intermediate_geo_nodes[geo_node.uuid] = geo_node
+                            geo_node = DbrefGeoNode(x, y)
+                            edge.intermediate_geo_nodes.append(geo_node)
                     else:
                         print(f"The nodes {node_a_id} and {node_b_id} are already connected.")
             elif re.match(r'signal [a-zA-Z_0-9]+ [a-zA-Z_0-9]+ -?\d+(\.\d+)? .+ \S+( \S)?', command):
@@ -98,11 +94,11 @@ class CLI:
                 if len(splits) > 6:
                     element_name = splits[6]
 
-                if function not in Signal.get_supported_functions():
-                    print(f"Function {function} is not supported. Choose any from: {Signal.get_supported_functions()}")
+                if not SignalFunction[function]:
+                    print(f"Function {function} is not supported. Choose any from: {[member.name for member in SignalFunction]}")
                     continue
-                if kind not in Signal.get_supported_kinds():
-                    print(f"Kind {kind} is not supported. Choose any from: {Signal.get_supported_kinds()}")
+                if not SignalKind[kind]:
+                    print(f"Kind {kind} is not supported. Choose any from: {[member.name for member in SignalKind]}")
                     continue
 
                 node_a = self.__find_node_with_identifier(node_a_id)
@@ -119,17 +115,15 @@ class CLI:
                     print(f"The nodes {node_a_id} and {node_b_id} are not connected. Please connect them first.")
                     continue
 
-                if distance > edge.get_length():
+                if distance > edge.length:
                     print("Distance is greater than edge length. Choose a smaller distance.")
                     continue
 
-                is_valid = True
                 effective_direction = "in"
-                if edge.node_b.identifier == node_a_id and edge.node_a.identifier == node_b_id:
+                if edge.node_b.uuid == node_a_id and edge.node_a.uuid == node_b_id:
                     effective_direction = "gegen"
-                    distance = edge.get_length() - distance
 
-                signal = Signal(edge, distance, effective_direction, function, kind, element_name=element_name)
+                signal = Signal(edge, distance, effective_direction, function, kind, name=element_name)
                 self.topology.signals[signal.uuid] = signal
             elif command != "exit":
                 print("Command does not exists")
