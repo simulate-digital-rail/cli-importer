@@ -127,7 +127,6 @@ class CLI:
                 effective_direction = "in"
                 if edge.node_b.identifier == node_a_id and edge.node_a.identifier == node_b_id:
                     effective_direction = "gegen"
-                    distance = edge.get_length() - distance
 
                 signal = Signal(edge, distance, effective_direction, function, kind, element_name=element_name)
                 self.topology.signals[signal.uuid] = signal
