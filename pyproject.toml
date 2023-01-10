@@ -9,9 +9,6 @@ packages = [{include = "cli_importer"}]
 python = "^3.10"
 yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
 
-[tool.poetry.group.dev.dependencies]
-yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
