@@ -31,7 +31,7 @@ class CLI:
         print("Exit cli: exit")
         print()
 
-        filename = input("Please enter the file name (without suffix): ")
+        self.topology.name = input("Please enter the file name (without suffix): ")
 
         command = ""
         while command != "exit":
