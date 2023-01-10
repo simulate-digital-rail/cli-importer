@@ -7,24 +7,6 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
-name = "planpro-exporter"
-version = "0.9"
-description = ""
-category = "dev"
-optional = false
-python-versions = "^3.10"
-develop = false
-
-[package.dependencies]
-yaramo = {git = "https://github.com/simulate-digital-rail/yaramo.git"}
-
-[package.source]
-type = "git"
-url = "https://github.com/simulate-digital-rail/planpro-exporter.git"
-reference = "yaramo-model"
-resolved_reference = "9bcc43f61da2e76444d51f26c6772d3b5b580d08"
-
-[[package]]
 name = "pyproj"
 version = "3.4.1"
 description = "Python interface to PROJ (cartographic projections and coordinate transformations library)"
@@ -49,21 +31,20 @@ pyproj = "^3.4.1"
 
 [package.source]
 type = "git"
-url = "https://github.com/simulate-digital-rail/yaramo.git"
+url = "https://github.com/simulate-digital-rail/yaramo"
 reference = "HEAD"
-resolved_reference = "fcf086382be5ff601658d012c625432d0708ab30"
+resolved_reference = "3aac7f7475430e337a772fb3052f7cd217e8a8c2"
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "eb78dc46955f211916983f23a9a474822dc15e90dbf6ccad2be2456a494d43f2"
+content-hash = "cc050b3c18bfc1dcb17f6f01221e300857c8ea017061ce00d720c7935dd3700c"
 
 [metadata.files]
 certifi = [
     {file = "certifi-2022.12.7-py3-none-any.whl", hash = "sha256:4ad3232f5e926d6718ec31cfc1fcadfde020920e278684144551c91769c7bc18"},
     {file = "certifi-2022.12.7.tar.gz", hash = "sha256:35824b4c3a97115964b408844d64aa14db1cc518f6562e8d7261699d1350a9e3"},
 ]
-planpro-exporter = []
 pyproj = [
     {file = "pyproj-3.4.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:e463c687007861a9949909211986850cfc2e72930deda0d06449ef2e315db534"},
     {file = "pyproj-3.4.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:2f87f16b902c8b2af007295c63a435f043db9e40bd45e6f96962c7b8cd08fdb5"},
