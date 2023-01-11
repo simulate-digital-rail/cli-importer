@@ -11,7 +11,7 @@ class CLI:
 
     def __find_node_with_identifier(self,_identifier):
         for _node in self.topology.nodes.values():
-            if _node.uuid == _identifier:
+            if _node.name == _identifier:
                 return _node
         return None
 
@@ -28,7 +28,7 @@ class CLI:
         print("Create a node (end or point): node <id> <x> <y> <description>")
         print("Create an edge: edge <node id a> <node id b> [coords x1,y1 [x2,y2 ...]]")
         print("Create a signal: signal <node id from> <node id to> <distance to node from> <function> <kind> [<name>]")
-        print("Exit cli: exit")
+        print("Generate and exit CLI: exit")
         print()
 
         self.topology.name = input("Please enter the file name (without suffix): ")
@@ -49,7 +49,7 @@ class CLI:
                     desc = splits[4]
 
                 if self.__find_node_with_identifier(identifier) is None:
-                    node = Node(uuid=identifier)
+                    node = Node(name=identifier)
                     node.geo_node = DbrefGeoNode(x, y)
                     self.topology.nodes[node.uuid] = node
                 else:
