@@ -25,9 +25,11 @@ class CLI:
     def run(self):
         print("Welcome to the PlanPro Generator")
         print("Usage:")
-        print("Create a node (end or point): node <id> <x> <y> <description>")
+        print("Create a node (end or point): node <id> <x> <y> [description]")
         print("Create an edge: edge <node id a> <node id b> [coords x1,y1 [x2,y2 ...]]")
         print("Create a signal: signal <node id from> <node id to> <distance to node from> <function> <kind> [<name>]")
+        print(f"\tWhere <function> is one of {[member.name for member in SignalFunction]}")
+        print(f"\t and where <kind> is one of {[member.name for member in SignalKind]}")
         print("Generate and exit CLI: exit")
         print()
 
