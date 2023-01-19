@@ -96,10 +96,14 @@ class CLI:
                 if len(splits) > 6:
                     element_name = splits[6]
 
-                if not SignalFunction.get(function, None):
+                try:
+                    SignalFunction[function]
+                except KeyError:
                     print(f"Function {function} is not supported. Choose any from: {[member.name for member in SignalFunction]}")
                     continue
-                if not SignalKind.get(kind, None):
+                try:
+                    SignalKind.get(kind, None)
+                except KeyError:
                     print(f"Kind {kind} is not supported. Choose any from: {[member.name for member in SignalKind]}")
                     continue
 
