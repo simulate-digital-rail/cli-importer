@@ -25,9 +25,11 @@ class CLI:
     def run(self):
         print("Welcome to the PlanPro Generator")
         print("Usage:")
-        print("Create a node (end or point): node <id> <x> <y> <description>")
+        print("Create a node (end or point): node <id> <x> <y> [description]")
         print("Create an edge: edge <node id a> <node id b> [coords x1,y1 [x2,y2 ...]]")
         print("Create a signal: signal <node id from> <node id to> <distance to node from> <function> <kind> [<name>]")
+        print(f"\tWhere <function> is one of {[member.name for member in SignalFunction]}")
+        print(f"\tand where <kind> is one of {[member.name for member in SignalKind]}")
         print("Generate and exit CLI: exit")
         print()
 
@@ -94,10 +96,14 @@ class CLI:
                 if len(splits) > 6:
                     element_name = splits[6]
 
-                if not SignalFunction[function]:
+                try:
+                    SignalFunction[function]
+                except KeyError:
                     print(f"Function {function} is not supported. Choose any from: {[member.name for member in SignalFunction]}")
                     continue
-                if not SignalKind[kind]:
+                try:
+                    SignalKind.get(kind, None)
+                except KeyError:
                     print(f"Kind {kind} is not supported. Choose any from: {[member.name for member in SignalKind]}")
                     continue
 
