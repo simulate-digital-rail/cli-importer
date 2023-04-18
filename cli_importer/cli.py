@@ -72,7 +72,7 @@ class CLI:
                     if self.__find_edge_by_nodes(node_a, node_b) is None:
                         edge = Edge(node_a, node_b)
                         node_a.connected_edges.append(edge)
-                        node_b.connected_edges(edge)
+                        node_b.connected_edges.append(edge)
                         edge.update_length()
                         self.topology.edges[edge.uuid] =edge
 
