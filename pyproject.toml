@@ -7,7 +7,7 @@ packages = [{include = "cli_importer"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-yaramo = {git = "https://github.com/antonykamp/yaramo", branch="refactor/replace-connected-nodes-with-edges"}
+yaramo = {git = "https://github.com/bp2022-ap1/yaramo", branch="refactor/replace-connected-nodes-with-edges"}
 
 [build-system]
 requires = ["poetry-core"]
