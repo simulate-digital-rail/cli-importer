@@ -126,7 +126,7 @@ class CLI:
                     continue
 
                 effective_direction = "in"
-                if edge.node_b.uuid == node_a_id and edge.node_a.uuid == node_b_id:
+                if edge.node_b.uuid == node_a.uuid and edge.node_a.uuid == node_b.uuid:
                     effective_direction = "gegen"
 
                 signal = Signal(edge, distance, effective_direction, function, kind, name=element_name)
