@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "CLI-Importer"
-version = "0.9"
+version = "1.0"
 description = ""
-authors = ["OSM HPI <OSM@HPI>"]
+authors = ["Arne Boockmeyer <arne.boockmeyer@hpi.de>"]
 packages = [{include = "cli_importer"}]
 
 [tool.poetry.dependencies]
