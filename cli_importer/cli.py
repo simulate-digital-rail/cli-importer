@@ -1,5 +1,6 @@
 from typing import List
-from yaramo.model import Node, Edge, Signal, Topology, SignalFunction, SignalKind, DbrefGeoNode
+from yaramo.model import Node, Edge, Signal, Topology, SignalFunction, SignalKind, DbrefGeoNode, SignalDirection
+from railwayroutegenerator.routegenerator import RouteGenerator
 import re
 
 
@@ -30,6 +31,8 @@ class CLI:
         print("Create a signal: signal <node id from> <node id to> <distance to node from> <function> <kind> [<name>]")
         print(f"\tWhere <function> is one of {[member.name for member in SignalFunction]}")
         print(f"\tand where <kind> is one of {[member.name for member in SignalKind]}")
+        print(f"Generate routes: routes")
+        print(f"Print some statistics: stats")
         print("Generate and exit CLI: exit")
         print()
 
@@ -133,6 +136,14 @@ class CLI:
                 signal = Signal(edge, distance, effective_direction, function, kind, name=element_name)
                 edge.signals.append(signal)
                 self.topology.signals[signal.uuid] = signal
+            elif command == "routes":
+                RouteGenerator(self.topology).generate_routes()
+            elif command == "stats":
+                print("Stats:")
+                print(f"Nodes: {len(self.topology.nodes)}")
+                print(f"Edges: {len(self.topology.edges)}")
+                print(f"Signals: {len(self.topology.signals)}")
+                print(f"Routes: {len(self.topology.routes)}")
             elif command != "exit":
                 print("Command does not exists")
 
