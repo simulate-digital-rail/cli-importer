@@ -97,12 +97,12 @@ class CLI:
                     element_name = splits[6]
 
                 try:
-                    SignalFunction[function]
+                    function = SignalFunction[function]
                 except KeyError:
                     print(f"Function {function} is not supported. Choose any from: {[member.name for member in SignalFunction]}")
                     continue
                 try:
-                    SignalKind.get(kind, None)
+                    kind = SignalKind[kind]
                 except KeyError:
                     print(f"Kind {kind} is not supported. Choose any from: {[member.name for member in SignalKind]}")
                     continue
@@ -125,11 +125,13 @@ class CLI:
                     print("Distance is greater than edge length. Choose a smaller distance.")
                     continue
 
-                effective_direction = "in"
+                effective_direction = SignalDirection.IN
                 if edge.node_b.uuid == node_a.uuid and edge.node_a.uuid == node_b.uuid:
-                    effective_direction = "gegen"
+                    effective_direction = SignalDirection.GEGEN
+                    distance = edge.length - distance
 
                 signal = Signal(edge, distance, effective_direction, function, kind, name=element_name)
+                edge.signals.append(signal)
                 self.topology.signals[signal.uuid] = signal
             elif command != "exit":
                 print("Command does not exists")
