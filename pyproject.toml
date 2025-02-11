@@ -8,6 +8,7 @@ packages = [{include = "cli_importer"}]
 [tool.poetry.dependencies]
 python = "^3.10"
 yaramo = {git = "https://github.com/simulate-digital-rail/yaramo"}
+railway-route-generator = {git = "https://github.com/simulate-digital-rail/railway-route-generator"}
 
 [build-system]
 requires = ["poetry-core"]
