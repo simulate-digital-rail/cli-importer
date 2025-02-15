@@ -5,7 +5,7 @@ This commandline tool can be used to quickly generate railway topology in the [y
 
 To use the importer as a library, install it via:
 
-`pip3 install git+https://github.com/simulate-digital-rail/planpro-exporter`
+`pip3 install git+https://github.com/simulate-digital-rail/cli-importer`
 
 Afterwards you can import it to your application with:
 ```python
