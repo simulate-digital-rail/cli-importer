@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "CLI-Importer"
-version = "2.0"
+version = "3.0"
 description = ""
 authors = ["Arne Boockmeyer <arne.boockmeyer@hpi.de>"]
 packages = [{include = "cli_importer"}]
