@@ -1,13 +1,14 @@
 [tool.poetry]
 name = "CLI-Importer"
-version = "0.9"
+version = "2.0"
 description = ""
-authors = ["OSM HPI <OSM@HPI>"]
+authors = ["Arne Boockmeyer <arne.boockmeyer@hpi.de>"]
 packages = [{include = "cli_importer"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-yaramo = {git = "https://github.com/bp2022-ap1/yaramo", branch="refactor/replace-connected-nodes-with-edges"}
+python = "^3.11"
+yaramo = {git = "https://github.com/simulate-digital-rail/yaramo", branch = "yaramo2" }
+railway-route-generator = {git = "https://github.com/simulate-digital-rail/railway-route-generator", branch = "yaramo2" }
 
 [build-system]
 requires = ["poetry-core"]
