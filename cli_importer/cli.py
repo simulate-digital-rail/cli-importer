@@ -1,5 +1,5 @@
 from typing import List
-from yaramo.model import Node, Edge, Signal, Topology, SignalFunction, SignalKind, DbrefGeoNode, SignalDirection
+from yaramo.model import Node, Edge, Signal, Topology, SignalFunction, SignalKind, SignalDirection, EuclideanGeoNode
 from railwayroutegenerator.routegenerator import RouteGenerator
 import re
 
@@ -47,15 +47,15 @@ class CLI:
             elif re.match(r'^node [a-zA-Z_0-9]+ -?\d+(\.\d+)? -?\d+(\.\d+)?( [a-zA-Z_0-9]+)?$', command):
                 splits = command.split(" ")
                 identifier = splits[1]
-                x = float(splits[2]) + 4533770.0
-                y = float(splits[3]) + 5625780.0
+                x = float(splits[2])
+                y = float(splits[3])
                 desc = ""
                 if len(splits) > 4:
                     desc = splits[4]
 
                 if self.__find_node_with_identifier(identifier) is None:
                     node = Node(name=identifier)
-                    node.geo_node = DbrefGeoNode(x, y)
+                    node.geo_node = EuclideanGeoNode(x, y)
                     self.topology.nodes[node.uuid] = node
                 else:
                     print(f"Node with id {identifier} already exists. Please use a different id.")
@@ -74,18 +74,19 @@ class CLI:
                 else:
                     if self.__find_edge_by_nodes(node_a, node_b) is None:
                         edge = Edge(node_a, node_b)
-                        node_a.connected_nodes.append(node_b)
-                        node_b.connected_nodes.append(node_a)
-                        edge.update_length()
-                        self.topology.edges[edge.uuid] =edge
+                        node_a.connected_edges.append(edge)
+                        node_b.connected_edges.append(edge)
+                        self.topology.edges[edge.uuid] = edge
 
                         # Intermediate nodes
                         for i in range(4, len(splits)):
                             intermediate_node = splits[i]
-                            x = float(intermediate_node.split(",")[0]) + 4533770.0
-                            y = float(intermediate_node.split(",")[1]) + 5625780.0
-                            geo_node = DbrefGeoNode(x, y)
+                            x = float(intermediate_node.split(",")[0])
+                            y = float(intermediate_node.split(",")[1])
+                            geo_node = EuclideanGeoNode(x, y)
                             edge.intermediate_geo_nodes.append(geo_node)
+
+                        edge.update_length()
                     else:
                         print(f"The nodes {node_a_id} and {node_b_id} are already connected.")
             elif re.match(r'signal [a-zA-Z_0-9]+ [a-zA-Z_0-9]+ -?\d+(\.\d+)? .+ \S+( \S)?', command):
